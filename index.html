@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>어나더에덴 도감 — Another Eden Database</title>
+<meta name="description" content="어나더에덴 용어·약어 도감 — 게임 내 용어/약어/시스템 설명을 EN·KO·JP 동시 검색.">
+<meta name="theme-color" content="#13131a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="어나더에덴 도감 — Another Eden Database">
+<meta property="og:description" content="어나더에덴 용어·약어를 EN·KO·JP 동시 검색하는 도감.">
+<meta property="og:url" content="https://ggobugithesquirtle.github.io/glossary-guide/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+<style>
+:root {
+  --bg: #13131a;
+  --surface: #1c1c28;
+  --surface2: #262636;
+  --surface3: #30304a;
+  --border: #3a3a50;
+  --accent: #7c6fe0;
+  --accent2: #5b8dee;
+  --gold: #e0c46a;
+  --text: #e8e8f0;
+  --text2: #9494a8;
+  --text3: #6a6a80;
+  --en: #a89cf0;
+  --ko: #6ba3f0;
+  --jp: #e07c8f;
+  --fire: #E74C3C; --water: #3498DB; --wind: #2ECC71; --earth: #E67E22;
+  --thunder: #F1C40F; --shade: #9B59B6; --crystal: #BDC3C7;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, 'Segoe UI', 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  min-height: 100vh;
+}
+
+/* ── 헤더 ── */
+header {
+  background: linear-gradient(135deg, #0d0d1a 0%, #1a1a3e 40%, #0f2860 100%);
+  border-bottom: 2px solid var(--accent);
+  padding: 24px 16px 18px;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 70% 20%, rgba(124,111,224,0.15), transparent 60%);
+}
+.header-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+h1 {
+  font-size: 26px; font-weight: 800; letter-spacing: 0.02em;
+  background: linear-gradient(90deg, #c0b0ff 0%, #7ec8e3 50%, #e0c46a 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 4px;
+}
+.subtitle { color: var(--text2); font-size: 12px; }
+.subtitle span { color: var(--text3); margin: 0 4px; }
+.stats-bar { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.stat-chip {
+  background: rgba(124,111,224,0.15);
+  border: 1px solid rgba(124,111,224,0.3);
+  border-radius: 16px; padding: 3px 12px;
+  font-size: 11px; color: var(--text2);
+}
+.stat-chip b { color: var(--gold); }
+
+/* ── 컨트롤 ── */
+.controls {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(8px);
+}
+.controls-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+.search-row { display: flex; gap: 8px; align-items: center; }
+.search-wrap { position: relative; flex: 1; }
+.search-wrap input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px 9px 36px;
+  color: var(--text); font-size: 14px;
+  outline: none; transition: border-color 0.2s;
+}
+.search-wrap input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(124,111,224,0.2); }
+.search-wrap input::placeholder { color: var(--text3); }
+.search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text3); pointer-events: none; }
+.view-toggle { display: flex; gap: 0; }
+.view-toggle button {
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text3); padding: 7px 12px; cursor: pointer; font-size: 13px;
+  transition: all 0.15s;
+}
+.view-toggle button:first-child { border-radius: 8px 0 0 8px; }
+.view-toggle button:last-child { border-radius: 0 8px 8px 0; }
+.view-toggle button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.tag-row { display: flex; flex-wrap: wrap; gap: 4px; }
+.cbtn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 4px 12px;
+  color: var(--text2); font-size: 12px;
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
+}
+.cbtn:hover { border-color: var(--accent); color: var(--text); }
+.cbtn.on { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+
+.info-bar {
+  max-width: 1100px; margin: 6px auto 0;
+  padding: 0 16px; font-size: 11px; color: var(--text3);
+}
+
+/* ── 카드 그리드 (도감 뷰) ── */
+.card-grid {
+  max-width: 1100px; margin: 0 auto; padding: 12px 16px 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 10px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(124,111,224,0.15); }
+.card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.card-icon {
+  width: 36px; height: 36px;
+  background: var(--surface2);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+.card-icon img { width: 28px; height: 28px; image-rendering: pixelated; }
+.card-icon .emoji { font-size: 20px; }
+.card-titles { flex: 1; min-width: 0; }
+.card-en { color: var(--en); font-weight: 700; font-size: 14px; line-height: 1.3; }
+.card-abbr {
+  display: inline-block; background: var(--surface3);
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 0 5px; font-size: 10px; color: var(--gold);
+  font-weight: 700; margin-left: 4px; vertical-align: middle;
+}
+.card-langs { display: flex; gap: 12px; margin-bottom: 6px; }
+.card-lang { font-size: 12px; }
+.card-lang .label { color: var(--text3); margin-right: 3px; font-size: 10px; }
+.card-lang .ko { color: var(--ko); }
+.card-lang .jp { color: var(--jp); }
+.card-desc {
+  color: var(--text2); font-size: 12px; line-height: 1.5;
+  border-top: 1px solid var(--border); padding-top: 6px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.cat-badge {
+  position: absolute; top: 10px; right: 10px;
+  padding: 2px 8px; border-radius: 10px;
+  font-size: 10px; font-weight: 600;
+}
+.cat-badge.battle   { background: #c0392b; color: #fff; }
+.cat-badge.char     { background: #8e44ad; color: #fff; }
+.cat-badge.weapon   { background: #f39c12; color: #fff; }
+.cat-badge.equip    { background: #16a085; color: #fff; }
+.cat-badge.dungeon  { background: #d35400; color: #fff; }
+.cat-badge.system   { background: #2980b9; color: #fff; }
+.cat-badge.story    { background: #27ae60; color: #fff; }
+.cat-badge.location { background: #8d6e63; color: #fff; }
+.cat-badge.meta     { background: #7f8c8d; color: #fff; }
+
+/* ── 테이블 뷰 ── */
+.tbl-wrap { max-width: 1100px; margin: 0 auto; padding: 8px 16px 60px; }
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  position: sticky; top: 58px; z-index: 50;
+  background: var(--surface);
+  color: var(--text2); font-size: 11px; font-weight: 600;
+  text-align: left; padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+}
+tbody tr { border-bottom: 1px solid var(--border); transition: background 0.12s; cursor: pointer; }
+tbody tr:hover { background: var(--surface2); }
+td { padding: 7px 8px; vertical-align: middle; font-size: 13px; }
+.td-icon { width: 40px; text-align: center; }
+.td-icon img { width: 24px; height: 24px; image-rendering: pixelated; vertical-align: middle; }
+.td-cat { width: 64px; }
+.td-en { width: 180px; }
+.td-ko { width: 130px; }
+.td-jp { width: 110px; }
+.term-en { color: var(--en); font-weight: 600; }
+.term-ko { color: var(--ko); }
+.term-jp { color: var(--jp); font-size: 12px; }
+.desc-text { color: var(--text2); font-size: 12px; }
+
+/* ── 모달 ── */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  justify-content: center; align-items: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 16px;
+  max-width: 560px; width: 100%;
+  max-height: 80vh; overflow-y: auto;
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+.modal-close {
+  position: absolute; top: 12px; right: 14px;
+  background: none; border: none;
+  color: var(--text3); font-size: 24px;
+  cursor: pointer; line-height: 1;
+}
+.modal-close:hover { color: var(--text); }
+.modal-icon-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.modal-icon {
+  width: 52px; height: 52px;
+  background: var(--surface2); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+}
+.modal-icon img { width: 40px; height: 40px; image-rendering: pixelated; }
+.modal-icon .emoji { font-size: 28px; }
+.modal-title { flex: 1; }
+.modal-en { font-size: 20px; font-weight: 800; color: var(--en); }
+.modal-cat-badge { display: inline-block; margin-top: 2px; }
+.modal-langs {
+  background: var(--surface2); border-radius: 10px;
+  padding: 10px 14px; margin-bottom: 12px;
+  display: grid; grid-template-columns: 32px 1fr; gap: 4px 8px; align-items: center;
+}
+.modal-langs .flag { font-size: 11px; color: var(--text3); font-weight: 600; }
+.modal-langs .val-ko { color: var(--ko); font-size: 15px; font-weight: 600; }
+.modal-langs .val-jp { color: var(--jp); font-size: 14px; }
+.modal-langs .val-en { color: var(--text2); font-size: 13px; }
+.modal-desc {
+  color: var(--text); font-size: 14px; line-height: 1.7;
+  margin-bottom: 12px;
+}
+.modal-related { border-top: 1px solid var(--border); padding-top: 10px; }
+.modal-related h4 { font-size: 11px; color: var(--text3); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.related-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.related-tag {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 3px 10px;
+  font-size: 12px; color: var(--accent2);
+  cursor: pointer; transition: all 0.12s;
+}
+.related-tag:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.no-result { text-align: center; color: var(--text3); padding: 80px 20px; }
+.no-result .icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
+
+@media (max-width: 680px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .td-jp, .td-desc, thead th:nth-child(5), thead th:nth-child(6) { display: none; }
+  .modal { padding: 18px; }
+  h1 { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <h1>어나더에덴 도감</h1>
+    <div class="subtitle">Another Eden Database <span>|</span> EN · KO · JP 3개국어 <span>|</span> 도감 + 용어집</div>
+    <div class="stats-bar" id="statsBar"></div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="controls-inner">
+    <div class="search-row">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="q" aria-label="용어 검색 (영문·한글·일문)" placeholder="용어 · 약어 · 설명 검색 (EN · KO · JP)" oninput="render()">
+      </div>
+      <div class="view-toggle">
+        <button class="on" onclick="setView('card',this)" title="도감 뷰">🃏</button>
+        <button onclick="setView('table',this)" title="표 뷰">📋</button>
+      </div>
+    </div>
+    <div class="tag-row" id="tags"></div>
+  </div>
+</div>
+
+<div class="info-bar" id="info"></div>
+
+<div class="card-grid" id="cardView"></div>
+<div class="tbl-wrap" id="tableView" style="display:none">
+  <table><thead><tr>
+    <th></th><th>분류</th><th>English</th><th>한국어</th><th>日本語</th><th>설명</th>
+  </tr></thead><tbody id="tbody"></tbody></table>
+</div>
+<div class="no-result" id="noResult" style="display:none">
+  <div class="icon">📭</div>
+  <div>검색 결과가 없습니다</div>
+</div>
+
+<!-- 모달 -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="용어 상세"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// 어나더에덴 도감 데이터 v2 — 2026-03-25
+// ═══════════════════════════════════════════════════════════════
+const G = [
+
+  // ══ 전투 시스템 ═════════════════════════════════════════
+  { cat:"battle", en:"Another Force", ko:"어나더 포스", jp:"アナザーフォース", abbr:"AF",
+    icon:"emoji:⚡", desc:"게이지 50% 이상 시 발동. 적 행동 정지 + MP 0 + 실시간 연속 스킬 시전. 게이지는 초당 10% 감소.",
+    rel:["AF Gauge","AF Combo","Special Attack","EX Special Move","Zone / Stance"] },
+  { cat:"battle", en:"AF Gauge", ko:"AF 게이지", jp:"AFゲージ",
+    icon:"emoji:📊", desc:"공격 히트 시 충전. 통상/내성/무효 +1.5%, 약점 +3.5%, 흡수 0%. Zone 내 해당 속성은 추가 충전. 전투 종료 시 잔량 다음 전투로 이월(최대 50%)." },
+  { cat:"battle", en:"AF Combo", ko:"AF 콤보", jp:"AFコンボ",
+    desc:"AF 중 75%에서 시작해 히트/타겟마다 증가하는 데미지 배율. 같은 속성 통일 시 극대화." },
+  { cat:"battle", en:"Special Attack", ko:"스페셜 어택", jp:"スペシャルアタック",
+    desc:"AF 종료 시 게이지가 가득 차 있으면 발동. 적 방어 무시." },
+  { cat:"battle", en:"EX Special Move", ko:"EX 스페셜", jp:"EXスペシャル",
+    desc:"Extra Style 캐릭터 전용 AF 피니셔. EX 레벨(최대 10) 기반. 레벨은 AF 중 스킬 사용으로 충전.",
+    rel:["Extra Style"] },
+  { cat:"battle", en:"Zone / Stance", ko:"ZONE / 존", jp:"ゾーン/スタンス",
+    icon:"emoji:🌀", desc:"필드 전체에 효과를 부여하는 상태. 속성/물리 타입 데미지를 증감. 한 번에 하나만 활성. AF 중 변경 불가.",
+    rel:["Another Zone","Radical Zone","Zone Setter","Raging Fire Stance"] },
+  { cat:"battle", en:"Another Zone", ko:"어나더 존", jp:"アナザーゾーン", abbr:"AZ",
+    desc:"강화 존. 데미지 2배 효과, 지속 2턴, 덮어쓰기 불가. 최고 딜 윈도우." },
+  { cat:"battle", en:"Radical Zone", ko:"래디컬 존", jp:"ラジカルゾーン", abbr:"RZ",
+    desc:"강화 존. 데미지 배율 없음, 지속 5턴, 패시브로 연장 가능. 장기전/유틸리티." },
+  { cat:"battle", en:"Raging Fire Stance", ko:"화염 ZONE", jp:"燃え盛る炎のスタンス",
+    icon:"img:icons/elem_fire.png", desc:"Fire 속성 데미지 강화 존." },
+  { cat:"battle", en:"Sacred Water Stance", ko:"수 ZONE", jp:"聖なる水のスタンス",
+    icon:"img:icons/elem_water.png", desc:"Water 속성 데미지 강화 존." },
+  { cat:"battle", en:"Torn Earth Stance", ko:"대지 ZONE", jp:"裂かれた大地のスタンス",
+    icon:"img:icons/elem_earth.png", desc:"Earth 속성 데미지 강화 존." },
+  { cat:"battle", en:"Raging Wind Stance", ko:"풍 ZONE", jp:"荒ぶる風のスタンス",
+    icon:"img:icons/elem_wind.png", desc:"Wind 속성 데미지 강화 존." },
+  { cat:"battle", en:"Thundering Stance", ko:"뇌 ZONE", jp:"雷鳴のスタンス",
+    icon:"img:icons/elem_thunder.png", desc:"Thunder 속성 데미지 강화 존." },
+  { cat:"battle", en:"Biting Shade Stance", ko:"암흑 ZONE", jp:"噛みつく影のスタンス",
+    icon:"img:icons/elem_shade.png", desc:"Shade 속성 데미지 강화 존." },
+  { cat:"battle", en:"Crystalline Stance", ko:"크리스탈 ZONE", jp:"結晶のスタンス",
+    icon:"img:icons/elem_crystal.png", desc:"Crystal 속성 데미지 강화 존." },
+  { cat:"battle", en:"Slash Zone", ko:"참격 ZONE", jp:"斬撃のスタンス",
+    icon:"img:icons/type_slash.png", desc:"Slash 타입 물리 데미지 강화 존." },
+  { cat:"battle", en:"Pierce Zone", ko:"찌르기 ZONE", jp:"突撃のスタンス",
+    icon:"img:icons/type_pierce.png", desc:"Pierce 타입 물리 데미지 강화 존." },
+  { cat:"battle", en:"Blunt Zone", ko:"타격 ZONE", jp:"打撃のスタンス",
+    icon:"img:icons/type_blunt.png", desc:"Blunt 타입 물리 데미지 강화 존." },
+  { cat:"battle", en:"Magic Zone", ko:"마법 ZONE", jp:"魔撃のスタンス",
+    icon:"img:icons/type_magic.png", desc:"마법 데미지 강화 존." },
+  { cat:"battle", en:"Zone Setter", ko:"존 세터", jp:"ゾーンセッター",
+    desc:"Zone 설정 VC/스킬을 보유한 캐릭터. 파티 구성의 축.",
+    rel:["Zone / Stance","Valor Chant"] },
+  { cat:"battle", en:"Another Sense", ko:"어나더 센스", jp:"アナザーセンス",
+    desc:"Alter/ACAS 캐릭터 전용 패시브. Awakened Zone 활성화 시 발동.",
+    rel:["ACAS Style","Alter"] },
+  { cat:"battle", en:"Lunatic", ko:"루나틱", jp:"ルナティック",
+    icon:"emoji:🔥", desc:"1회 발동 가능한 3턴 특수 모드. 캐릭터별 고유 효과. 강력하지만 리스크 동반 (HP 소모, 제한 턴 등)." },
+  { cat:"battle", en:"Stellar Burst", ko:"스텔라 버스트", jp:"星導バースト",
+    icon:"emoji:⭐", desc:"Light/Shadow 게이지 100% 시 발동. 선택 스킬이 턴 소모 없이 발동.",
+    rel:["Stellar Awakening","Light / Shadow"] },
+  { cat:"battle", en:"Valor Chant", ko:"배리어블 찬트", jp:"バリアブルチャント", abbr:"VC",
+    desc:"후방에서 전방으로 교체 시 발동하는 스킬. 즉시 버프/디버프/공격 효과.",
+    rel:["Frontline","Reserves","VC Grasta"] },
+  { cat:"battle", en:"Frontline", ko:"전방", jp:"前衛",
+    desc:"전투에 직접 참여하는 캐릭터 슬롯 (최대 4명)." },
+  { cat:"battle", en:"Reserves", ko:"후방", jp:"後衛",
+    desc:"전투 대기. 매 턴 최대 HP/MP의 10% 자동 회복." },
+  { cat:"battle", en:"Sidekick", ko:"버디", jp:"バディ",
+    desc:"5번째 전투원. 차징 소비로 효과 발동. 랭크/장비 강화 가능." },
+  { cat:"battle", en:"Singing", ko:"노래 (상태)", jp:"歌唱",
+    icon:"img:icons/status_singing.png", desc:"노래 스킬 시전 중 발생하는 행동 불가 상태. Zone/기도와 동시 유지 가능. 수면/혼란/석화/기절/동결/넉백/사망 시 해제." },
+  { cat:"battle", en:"Praying", ko:"기도 (상태)", jp:"祈祷",
+    icon:"img:icons/status_prayer.png", desc:"기도 효과 상태. HP 피해(실드 제외) 시 해제. Zone/노래와 동시 유지 가능." },
+  { cat:"battle", en:"Aura", ko:"오라", jp:"オーラ",
+    desc:"캐릭터 주변에 발생하는 지속 효과. 스킬/패시브로 활성화." },
+  { cat:"battle", en:"HP Stopper", ko:"HP 스토퍼", jp:"HPストッパー",
+    desc:"보스의 특정 HP 지점에서 더 이상 데미지를 받지 않는 구간. 페이즈/패턴 전환 트리거." },
+
+  // ── 약점/내성 ──
+  { cat:"battle", en:"Weakness", ko:"약점", jp:"弱点",
+    icon:"img:icons/weakness.png", desc:"해당 속성/타입 공격 시 데미지 약 2배. AF 게이지 +3.5%/히트." },
+  { cat:"battle", en:"Resistance", ko:"내성", jp:"耐性",
+    icon:"img:icons/resistance.png", desc:"해당 속성/타입 공격 시 데미지 약 1/4." },
+  { cat:"battle", en:"Invalid", ko:"무효", jp:"無効",
+    desc:"공격 완전 무효. 단, AF 게이지는 충전됨 (+1.5%)." },
+  { cat:"battle", en:"Absorption", ko:"흡수", jp:"吸収",
+    icon:"img:icons/absorption.png", desc:"공격이 적의 HP를 회복시킴. AF 게이지 충전 안 됨." },
+  { cat:"battle", en:"Expose", ko:"노출 (약점 추가)", jp:"エクスポーズ",
+    desc:"특정 속성/타입을 적의 약점에 추가하는 효과." },
+
+  // ── 스탯 ──
+  { cat:"battle", en:"PWR (Power)", ko:"파워", jp:"パワー", abbr:"PWR", desc:"물리 공격의 기반 스탯." },
+  { cat:"battle", en:"INT (Intelligence)", ko:"인텔리전스", jp:"インテリジェンス", abbr:"INT", desc:"마법 공격의 기반 스탯." },
+  { cat:"battle", en:"END (Endurance)", ko:"인듀런스", jp:"エンデュランス", abbr:"END", desc:"물리 방어 스탯." },
+  { cat:"battle", en:"SPR (Spirit)", ko:"스피릿", jp:"スピリット", abbr:"SPR", desc:"마법 방어 스탯." },
+  { cat:"battle", en:"SPD (Speed)", ko:"스피드", jp:"スピード", abbr:"SPD", desc:"행동 순서 결정. AF 중 스킬 쿨다운에 영향." },
+  { cat:"battle", en:"LCK (Luck)", ko:"럭", jp:"ラック", abbr:"LCK", desc:"크리티컬 확률에 영향." },
+
+  // ── 공격 타입 ──
+  { cat:"battle", en:"Slash", ko:"참격 (슬래시)", jp:"斬",
+    icon:"img:icons/type_slash.png", desc:"물리 공격 타입. 검/도/도끼 계열.", rel:["Sword","Katana","Axe"] },
+  { cat:"battle", en:"Pierce", ko:"찌르기 (피어스)", jp:"突",
+    icon:"img:icons/type_pierce.png", desc:"물리 공격 타입. 창/활 계열.", rel:["Lance","Bow"] },
+  { cat:"battle", en:"Blunt", ko:"타격 (블런트)", jp:"打",
+    icon:"img:icons/type_blunt.png", desc:"물리 공격 타입. 주먹/해머 계열.", rel:["Fists","Hammer"] },
+  { cat:"battle", en:"Magic", ko:"마법", jp:"魔法",
+    icon:"img:icons/type_magic.png", desc:"마법 공격 타입. 지팡이 계열. INT 기반.", rel:["Staff"] },
+
+  // ── 속성 ──
+  { cat:"battle", en:"Fire", ko:"파이어 (화)", jp:"火",
+    icon:"img:icons/elem_fire.png", desc:"7대 속성. 약점: Water, 강점: Wind." },
+  { cat:"battle", en:"Water", ko:"워터 (수)", jp:"水",
+    icon:"img:icons/elem_water.png", desc:"7대 속성. 약점: Earth, 강점: Fire." },
+  { cat:"battle", en:"Earth", ko:"어스 (지)", jp:"地",
+    icon:"img:icons/elem_earth.png", desc:"7대 속성. 약점: Wind, 강점: Water." },
+  { cat:"battle", en:"Wind", ko:"윈드 (풍)", jp:"風",
+    icon:"img:icons/elem_wind.png", desc:"7대 속성. 약점: Fire, 강점: Earth." },
+  { cat:"battle", en:"Thunder", ko:"썬더 (뇌)", jp:"雷",
+    icon:"img:icons/elem_thunder.png", desc:"7대 속성. 약점: Shade." },
+  { cat:"battle", en:"Shade", ko:"셰이드 (암)", jp:"闇",
+    icon:"img:icons/elem_shade.png", desc:"7대 속성. 약점: Thunder." },
+  { cat:"battle", en:"Crystal", ko:"크리스탈 (정)", jp:"晶",
+    icon:"img:icons/elem_crystal.png", desc:"7대 속성. 약점: Crystal. 나머지 속성에 내성." },
+
+  // ── 상태이상 ──
+  { cat:"battle", en:"Pain", ko:"페인 (통증)", jp:"ペイン",
+    icon:"img:icons/status_pain.png", desc:"도트 데미지 + T2 그라스타 특공(+30%) 조건. 현 메타의 핵심 상태이상.",
+    rel:["T2 Grasta (Pain/Poison)"] },
+  { cat:"battle", en:"Poison", ko:"포이즌 (독)", jp:"ポイズン",
+    icon:"img:icons/status_poison.png", desc:"도트 데미지 + T2 그라스타 특공(+30%) 조건. Pain과 함께 핵심 상태이상." },
+  { cat:"battle", en:"Sleep", ko:"수면", jp:"睡眠", desc:"행동 불가. 피격 시 해제." },
+  { cat:"battle", en:"Confusion", ko:"혼란", jp:"混乱", desc:"랜덤 행동. 아군을 공격할 수 있음." },
+  { cat:"battle", en:"Stun", ko:"기절", jp:"気絶", desc:"1턴 행동 불가." },
+  { cat:"battle", en:"Rage", ko:"분노 (도발)", jp:"怒り", desc:"강제 대상 지정. 탱커 유도에 활용.", rel:["Tank"] },
+  { cat:"battle", en:"Buff / Debuff", ko:"버프 / 디버프", jp:"バフ/デバフ",
+    desc:"능력치 증감 효과. 동일 그룹 최대값만 적용(감쇠 스태킹), 다른 카테고리 간 곱연산." },
+
+  // ── 역할 ──
+  { cat:"battle", en:"DPS / Damage Dealer", ko:"딜러", jp:"アタッカー", desc:"데미지 출력 담당." },
+  { cat:"battle", en:"Support", ko:"서포터", jp:"サポート", desc:"버프, 디버프, 힐 담당." },
+  { cat:"battle", en:"Tank", ko:"탱커", jp:"タンク", desc:"피격 유도(Rage), 데미지 감소." },
+  { cat:"battle", en:"Healer", ko:"힐러", jp:"ヒーラー", desc:"HP 회복, 상태이상 해제." },
+
+  // ══ 캐릭터 시스템 ═══════════════════════════════════════
+  { cat:"char", en:"Style", ko:"스타일", jp:"スタイル",
+    desc:"NS / AS / ES 등 캐릭터 변형. 기억의 서로 해금.",
+    rel:["Normal Style","Another Style","Extra Style","ACAS Style","Alter"] },
+  { cat:"char", en:"Normal Style", ko:"NS (노말 스타일)", jp:"ノーマルスタイル", abbr:"NS", desc:"기본 5성 캐릭터 버전." },
+  { cat:"char", en:"Another Style", ko:"AS (어나더 스타일)", jp:"アナザースタイル", abbr:"AS",
+    desc:"강화/변형 버전. 가챠 또는 기억의 서로 획득.", rel:["Chant Script"] },
+  { cat:"char", en:"Extra Style", ko:"ES (엑스트라 스타일)", jp:"エクストラスタイル", abbr:"ES",
+    desc:"최고 등급 강화 버전. EX 스페셜 보유.", rel:["EX Special Move"] },
+  { cat:"char", en:"ACAS Style", ko:"이시층 스타일", jp:"ACASスタイル", abbr:"ACAS",
+    desc:"Another Cosmology/Abyss Style. Another Sense 패시브 보유.", rel:["Another Sense"] },
+  { cat:"char", en:"Alter", ko:"얼터", jp:"アルター",
+    desc:"NS/AS/ES와 별개 캐릭터 취급. 독자적 스킬셋.", rel:["Another Sense"] },
+  { cat:"char", en:"Stellar Awakening", ko:"성도각성", jp:"星導覚醒", abbr:"SA",
+    icon:"emoji:⭐", desc:"특정 5성 캐릭터의 숨겨진 강화. 레벨 캡 80→100.",
+    rel:["Stellar Board","Starchart","Stellar Points","Stellar Burst"] },
+  { cat:"char", en:"Stellar Board", ko:"스텔라 보드", jp:"星導盤",
+    desc:"성도각성 해금 시 개방. SP로 스킬/패시브/스탯 노드 해금." },
+  { cat:"char", en:"Starchart", ko:"스타차트", jp:"スターチャート",
+    desc:"각성 게이지 1포인트 채우는 아이템. 스타일별/전용 두 종류." },
+  { cat:"char", en:"Stellar Points", ko:"스텔라 포인트", jp:"星導ポイント", abbr:"SP",
+    desc:"스텔라 보드 노드 해금 통화. 라이트/쉐도우 임계값 달성 시 획득." },
+  { cat:"char", en:"Light / Shadow", ko:"라이트 / 쉐도우", jp:"光 / 影",
+    desc:"캐릭터별 누적 포인트. 던전 보상 수량 결정 + 보너스 스탯.",
+    rel:["Guiding Light","Luring Shadow","Stellar Burst"] },
+  { cat:"char", en:"Guiding Light", ko:"가이딩 라이트", jp:"導きの光", desc:"Light 계열 캐릭터가 쌓는 포인트." },
+  { cat:"char", en:"Luring Shadow", ko:"루어링 쉐도우", jp:"誘いの影", desc:"Shadow 계열 캐릭터가 쌓는 포인트." },
+  { cat:"char", en:"Personality", ko:"특성 (퍼스널리티)", jp:"パーソナリティ",
+    desc:"캐릭터 고유 태그. AF 필살기 연출 분류. 일부 ZONE/패시브 효과 공유.",
+    rel:["Personality Grasta"] },
+  { cat:"char", en:"Ability Board", ko:"어빌리티 보드", jp:"アビリティボード", desc:"캐릭터별 패시브/스킬 트리. AP 소모로 해금." },
+  { cat:"char", en:"Chain Ability", ko:"체인 어빌리티", jp:"チェインアビリティ", desc:"파티에 편성만 해도 발동되는 패시브 효과." },
+  { cat:"char", en:"Dream Encounter", ko:"몽견 (가챠)", jp:"夢幻召喚", icon:"emoji:🎲",
+    desc:"캐릭터 소환 시스템. 별자국(Chronos Stones)으로 소환.", rel:["Chronos Stones"] },
+  { cat:"char", en:"Chronos Stones", ko:"별자국", jp:"クロノスの石", icon:"emoji:💎", desc:"가챠 기본 통화." },
+  { cat:"char", en:"Tsubura's Gems", ko:"쓰부라의 보석", jp:"ツブラの宝珠",
+    desc:"VH 어나더 던전 완료 시 10개 획득. 노포우 컴퍼니에서 희귀 아이템 교환.", rel:["Nopaew Emporium"] },
+  { cat:"char", en:"Class Change", ko:"클래스 체인지", jp:"クラスチェンジ", desc:"하위 등급 캐릭터를 상위 등급으로 승급." },
+
+  // ══ 무기 타입 ═══════════════════════════════════════════
+  { cat:"weapon", en:"Sword", ko:"검", jp:"剣", icon:"img:icons/weap_sword.png", desc:"Slash 타입 무기. 균형잡힌 공격력." },
+  { cat:"weapon", en:"Katana", ko:"도 (카타나)", jp:"刀", icon:"img:icons/weap_katana.png", desc:"Slash 타입 무기." },
+  { cat:"weapon", en:"Axe", ko:"도끼", jp:"斧", icon:"img:icons/weap_axe.png", desc:"Slash 타입 무기. 고공격력, 저속도." },
+  { cat:"weapon", en:"Lance", ko:"창", jp:"槍", icon:"img:icons/weap_lance.png", desc:"Pierce 타입 무기." },
+  { cat:"weapon", en:"Bow", ko:"활", jp:"弓", icon:"img:icons/weap_bow.png", desc:"Pierce 타입 무기." },
+  { cat:"weapon", en:"Fists", ko:"주먹 (권갑)", jp:"拳", icon:"img:icons/weap_fists.png", desc:"Blunt 타입 무기. 다히트 특화." },
+  { cat:"weapon", en:"Hammer", ko:"해머", jp:"槌", icon:"img:icons/weap_hammer.png", desc:"Blunt 타입 무기. 고공격력." },
+  { cat:"weapon", en:"Staff", ko:"지팡이", jp:"杖", icon:"img:icons/weap_staff.png", desc:"마법 타입 무기. INT 기반." },
+
+  // ══ 장비 시스템 ═════════════════════════════════════════
+  { cat:"equip", en:"Grasta", ko:"글래스터", jp:"グラスタ", icon:"emoji:💠",
+    desc:"v2.0.100 도입. 캐릭터당 3슬롯 장착. 결합/분리/해제 가능.",
+    rel:["T1 Grasta (Elemental)","T2 Grasta (Pain/Poison)","T3 Grasta (Special)","Bind (Grasta)","Separate (Grasta)","Rescind (Grasta)"] },
+  { cat:"equip", en:"T1 Grasta (Elemental)", ko:"T1 속성 글래스터", jp:"T1グラスタ", desc:"해당 속성 공격력 증가. 속성당 최대값만 적용." },
+  { cat:"equip", en:"T2 Grasta (Pain/Poison)", ko:"T2 상태이상 글래스터", jp:"T2グラスタ",
+    icon:"img:icons/status_pain.png", desc:"Pain/Poison 상태 적에게 데미지 +30%. 현 메타 핵심. 가산 스태킹.",
+    rel:["Pain","Poison"] },
+  { cat:"equip", en:"T3 Grasta (Special)", ko:"T3 특수 글래스터", jp:"T3グラスタ", desc:"다양한 고유 효과. Rose with Thorns, Last Stand, Weak Point 등." },
+  { cat:"equip", en:"Grasta Awakening", ko:"글래스터 각성", jp:"グラスタ覚醒", desc:"각성 시 파티 전체 패시브 효과 부여 (Enchantment)." },
+  { cat:"equip", en:"Bind (Grasta)", ko:"결합", jp:"結合", desc:"글래스터를 캐릭터에 장착." },
+  { cat:"equip", en:"Separate (Grasta)", ko:"분리", jp:"分離", desc:"비장착 글래스터 분해→소재 전환." },
+  { cat:"equip", en:"Rescind (Grasta)", ko:"해제", jp:"解除", desc:"캐릭터에서 글래스터를 탈착." },
+  { cat:"equip", en:"VC Grasta", ko:"VC 글래스터", jp:"VCグラスタ", abbr:"VCG", desc:"스타일 전용 배리어블 찬트 증명서.", rel:["True VC Grasta","Extreme VC Grasta"] },
+  { cat:"equip", en:"True VC Grasta", ko:"진 VC 글래스터", jp:"真VCグラスタ", desc:"VC 글래스터 3장 합성. 강화 VC 효과." },
+  { cat:"equip", en:"Extreme VC Grasta", ko:"E 글래스터", jp:"エクストリームVCグラスタ", abbr:"E.G", desc:"최상위 글래스터." },
+  { cat:"equip", en:"Personality Grasta", ko:"특성 글래스터", jp:"パーソナリティグラスタ", desc:"특성 일치 캐릭터 공유 가능.", rel:["Personality"] },
+  { cat:"equip", en:"Grasta Fragment", ko:"글래스터 조각", jp:"グラスタのかけら", desc:"몬스터 드롭 기초 소재." },
+  { cat:"equip", en:"Grasta Crystal", ko:"글래스터 크리스탈", jp:"グラスタクリスタル", desc:"호러 처치/분리로 획득. 상위 소재." },
+  { cat:"equip", en:"Jadeite", ko:"옥수 (제이다이트)", jp:"翠玉", desc:"희귀 소재. 던전 보상." },
+  { cat:"equip", en:"Dormant Ore", ko:"휴면 광석", jp:"休眠鉱石", desc:"기존 글래스터 효과 강화." },
+  { cat:"equip", en:"Manifest Weapon", ko:"현현무기", jp:"顕現武器", icon:"emoji:⚔️",
+    desc:"특정 캐릭터 전용 특수 무기. 장착 시 5성 스킬 강화.", rel:["True Manifest","Weapon Tempering"] },
+  { cat:"equip", en:"True Manifest", ko:"진·현현", jp:"真・顕現", desc:"현현무기 더 높은 단계. 고난이도 2차전 필요." },
+  { cat:"equip", en:"Weapon Tempering", ko:"무기 결실 (템퍼링)", jp:"武器結実", desc:"현현무기 강화 시스템. 스크롤 + 골드." },
+  { cat:"equip", en:"Chant Script", ko:"기억의 서", jp:"想定の書", icon:"emoji:📜",
+    desc:"AS/ES 해금 핵심 아이템.", rel:["Another Style","Extra Style"] },
+  { cat:"equip", en:"Badge", ko:"배지", jp:"バッジ", desc:"던전 보상. 스탯 보정 장비." },
+  { cat:"equip", en:"Cat Hokora", ko:"고양이 사당", jp:"猫ほこら", desc:"글래스터 관리 전용 장소." },
+  { cat:"equip", en:"Bonfire", ko:"모닥불 (합성)", jp:"たき火", desc:"잉여 기억의 서→VC 글래스터 제작." },
+
+  // ══ 던전 시스템 ═════════════════════════════════════════
+  { cat:"dungeon", en:"Another Dungeon", ko:"어나더 던전", jp:"アナザーダンジョン", abbr:"AD", icon:"emoji:🏰",
+    desc:"반복 파밍 전용 던전.", rel:["Hard (AD)","Very Hard (AD)","Green Key","Red Key"] },
+  { cat:"dungeon", en:"Hard (AD)", ko:"Hard (하드)", jp:"ハード", desc:"10챕터 이후. 그린 키 1~2개." },
+  { cat:"dungeon", en:"Very Hard (AD)", ko:"Very Hard (VH)", jp:"ベリーハード", abbr:"VH", desc:"25챕터 + Hard 클리어. 레드 키 1개. 쓰부라의 보석 10개/회." },
+  { cat:"dungeon", en:"Green Key", ko:"그린 키", jp:"緑のカギ", desc:"Hard AD 입장 키." },
+  { cat:"dungeon", en:"Red Key", ko:"레드 키", jp:"赤のカギ", desc:"VH AD 입장 키." },
+  { cat:"dungeon", en:"White Key", ko:"화이트 키", jp:"白のカギ", desc:"10% 확률 등장. 환상 크리스탈 차원 입장.", rel:["Phantom Crystal Dimension"] },
+  { cat:"dungeon", en:"Rare Area", ko:"레어 구역", jp:"レアエリア", desc:"동일 맵, 다른 이름. 레어 호러 출현. ~21% 확률.", rel:["Rare Horror"] },
+  { cat:"dungeon", en:"Rare Horror", ko:"레어 호러", jp:"レアホラー", desc:"레어 구역에만 등장. 고유 소재 드롭." },
+  { cat:"dungeon", en:"Nopaew Emporium", ko:"노포우 컴퍼니", jp:"ノポウカンパニー", icon:"emoji:🏪",
+    desc:"쓰부라의 보석 교환소.", rel:["Tsubura's Gems","Chant Script"] },
+  { cat:"dungeon", en:"Phantom Crystal Dimension", ko:"환상 크리스탈 차원", jp:"幻晶次元", desc:"화이트 키로 입장. 크리스탈 소재 집중." },
+  { cat:"dungeon", en:"Sealed Realm", ko:"봉역", jp:"封域", desc:"특수 고난이도 구역." },
+  { cat:"dungeon", en:"Otherlands", ko:"이경", jp:"異境", desc:"지역 기반 특수 던전." },
+  { cat:"dungeon", en:"Superboss", ko:"초경 (슈퍼보스)", jp:"超経ボス", icon:"emoji:💀", desc:"최고 난이도 보스전. 엔드콘텐츠." },
+
+  // ══ 시스템 ═════════════════════════════════════════════
+  { cat:"system", en:"Manifestation", ko:"현현", jp:"顕現", desc:"무기 잠재력 개방 시스템.", rel:["Manifest Weapon"] },
+  { cat:"system", en:"Skip Ticket", ko:"스킵 티켓", jp:"スキップチケット", desc:"클리어한 던전 전투 없이 스킵." },
+  { cat:"system", en:"Food", ko:"식사", jp:"食事", desc:"전원 HP/MP 완전 회복. 여관에서 보충." },
+  { cat:"system", en:"Cat Stamp", ko:"냥도장", jp:"猫スタンプ", icon:"emoji:🐱", desc:"각 시대에 숨겨진 고양이 수집." },
+  { cat:"system", en:"Fishing", ko:"낚시", jp:"釣り", icon:"emoji:🎣", desc:"미니게임. 물고기 도감 수집 + 보상." },
+  { cat:"system", en:"Accolade", ko:"갈채", jp:"喝采", desc:"업적/칭호 시스템." },
+  { cat:"system", en:"Star of Resurrection", ko:"부활의 별", jp:"復活の星", desc:"전멸 시 부활 아이템." },
+  { cat:"system", en:"Revival", ko:"회생", jp:"蘇生", desc:"과거와의 결착. 특수 스토리+전투." },
+
+  // ══ 스토리 ═════════════════════════════════════════════
+  { cat:"story", en:"Main Story", ko:"메인 스토리", jp:"メインストーリー", icon:"emoji:📕", desc:"1부~3부 + 확장. 시간여행 중심 서사." },
+  { cat:"story", en:"Side Story (外伝)", ko:"외전", jp:"外伝", desc:"독립 스토리. 무료 캐릭터 획득 가능." },
+  { cat:"story", en:"Episode (外典)", ko:"외경", jp:"外典", desc:"외전보다 높은 격. 주요 스토리 연계." },
+  { cat:"story", en:"Symphony (協奏)", ko:"협주", jp:"協奏", icon:"emoji:🎵",
+    desc:"타 게임 콜라보 스토리. 영구 콘텐츠.",
+    rel:["Persona 5 Collab","Chrono Cross Collab"] },
+  { cat:"story", en:"Mythos", ko:"이면", jp:"ミトス", desc:"세계관 심화 스토리." },
+  { cat:"story", en:"Reunion (邂逅)", ko:"해후", jp:"邂逅", desc:"외전 캐릭터 후속 스토리." },
+  { cat:"story", en:"Enlightenment (開眼)", ko:"개안", jp:"開眼", desc:"캐릭터 잠재력 각성 + 성능 강화." },
+  { cat:"story", en:"Ensemble (群像)", ko:"군상", jp:"群像", desc:"복수 캐릭터 주역 서브 스토리." },
+  { cat:"story", en:"Chronicle (外史)", ko:"외사", jp:"外史", desc:"이계·이차원 스토리 계열." },
+
+  // ── 주요 캐릭터 ──
+  { cat:"story", en:"Aldo", ko:"알드", jp:"アルド", icon:"img:chars/char0001.webp",
+    desc:"주인공. 바루오키 출신. 시간여행자." },
+  { cat:"story", en:"Feinne", ko:"피네", jp:"フィーネ", icon:"img:chars/char0003.webp",
+    desc:"히로인. 알드의 여동생. 1부 핵심 동기." },
+  { cat:"story", en:"Amy", ko:"에이미", jp:"エイミー", icon:"img:chars/char0005.webp",
+    desc:"미래 시대의 소녀. 활발한 성격." },
+  { cat:"story", en:"Cyrus", ko:"시엘", jp:"シエル", icon:"img:chars/char0002.webp",
+    desc:"알드의 소꿉친구. 기사." },
+  { cat:"story", en:"Riica", ko:"리이카", jp:"リィカ", icon:"img:chars/char0004.webp",
+    desc:"미래에서 온 로봇 소녀." },
+  { cat:"story", en:"Miyu", ko:"미유", jp:"ミユ", icon:"img:chars/char0006.webp",
+    desc:"과거 시대 IDA 학원 출신." },
+
+  // ── 협업 ──
+  { cat:"story", en:"Persona 5 Collab", ko:"페르소나 5 협업", jp:"ペルソナ5コラボ", desc:"ATLUS. 조커, 모르가나 등. 영구." },
+  { cat:"story", en:"Chrono Cross Collab", ko:"크로노 크로스 협업", jp:"クロノクロスコラボ", desc:"같은 시나리오 작가(카토 마사토). 영구." },
+
+  // ── 세력 ──
+  { cat:"story", en:"IDA School", ko:"IDA 학원", jp:"IDAスクール", desc:"과거 시대의 학술/마법 기관." },
+  { cat:"story", en:"KMS", ko:"KMS", jp:"KMS", desc:"미래 AI 시스템. 인류 관리." },
+
+  // ══ 지역 ═══════════════════════════════════════════════
+  { cat:"location", en:"Antiquity", ko:"고대", jp:"古代", icon:"emoji:🏛️", desc:"수만 년 전. 파로 문명, 마법 전성기." },
+  { cat:"location", en:"Past", ko:"과거", jp:"過去", desc:"수백 년 전. 중세풍, 기사/왕국." },
+  { cat:"location", en:"Present", ko:"현대", jp:"現代", desc:"주인공 기준 시대." },
+  { cat:"location", en:"Future", ko:"미래", jp:"未来", icon:"emoji:🚀", desc:"수백 년 후. 디스토피아, KMS." },
+  { cat:"location", en:"Spacetime Rift", ko:"시공의 균열", jp:"時空の亀裂", icon:"emoji:🌌", desc:"시대 간 이동 수단. 현현 1차전 장소." },
+  { cat:"location", en:"Miglance Continent", ko:"미그레이나 대륙", jp:"ミグレイナ大陸", desc:"서쪽. 1부 주 무대." },
+  { cat:"location", en:"Garulea Continent", ko:"가를레아 대륙", jp:"ガルレア大陸", desc:"동쪽. 2부 주 무대. 일본풍." },
+  { cat:"location", en:"Baruoki", ko:"바루오키", jp:"バルオキー", desc:"현대 시작 마을. 알드의 고향." },
+  { cat:"location", en:"Elzion", ko:"엘지온", jp:"エルジオン", desc:"미래 시대 도시." },
+
+  // ══ 일반/메타 ═════════════════════════════════════════
+  { cat:"meta", en:"Another Eden", ko:"어나더에덴", jp:"アナザーエデン", icon:"emoji:🎮",
+    desc:"시공을 초월한 고양이. WFS 개발, 싱글플레이 JRPG. 2017(JP), 2019(GL)." },
+  { cat:"meta", en:"WFS", ko:"WFS", jp:"ライトフライヤースタジオ", desc:"개발사. GREE 자회사." },
+  { cat:"meta", en:"JP Version", ko:"JP 버전", jp:"JP版", desc:"일본 선행. GL보다 2~6개월 앞섬." },
+  { cat:"meta", en:"GL Version", ko:"GL 버전", jp:"GL版", desc:"글로벌 (한국어 포함)." },
+  { cat:"meta", en:"Kato Masato", ko:"카토 마사토", jp:"加藤正人", desc:"시나리오. 크로노 트리거/크로스." },
+  { cat:"meta", en:"Mitsuda Yasunori", ko:"미츠다 야스노리", jp:"光田康典", desc:"작곡. 크로노 트리거/크로스." },
+  { cat:"meta", en:"Tier List", ko:"티어리스트", jp:"ティアリスト", desc:"커뮤니티 순위. PvP 없으므로 참고용." },
+  { cat:"meta", en:"QoL", ko:"편의성 개선", jp:"QoL", abbr:"QoL", desc:"게임 편의성 업데이트." },
+];
+
+// ═══════════════════════════════════════════════════════════════
+const CATS = {
+  all:      { label:"전체",   icon:"📋" },
+  battle:   { label:"전투",   icon:"⚔" },
+  char:     { label:"캐릭터", icon:"👤" },
+  weapon:   { label:"무기",   icon:"🗡" },
+  equip:    { label:"장비",   icon:"🔮" },
+  dungeon:  { label:"던전",   icon:"🏰" },
+  system:   { label:"시스템", icon:"⚙" },
+  story:    { label:"스토리", icon:"📖" },
+  location: { label:"지역",   icon:"🗺" },
+  meta:     { label:"일반",   icon:"ℹ" },
+};
+const CAT_LABELS = {};
+for (const [k,v] of Object.entries(CATS)) if(k!=="all") CAT_LABELS[k] = v.label;
+
+let curCat = "all", curView = "card";
+
+// ── 아이콘 렌더 ──
+function renderIcon(item, size) {
+  const s = size || 28;
+  if (!item.icon) return `<span class="emoji">${CATS[item.cat]?.icon||"📄"}</span>`;
+  if (item.icon.startsWith("img:")) return `<img src="images/${item.icon.slice(4)}" width="${s}" height="${s}" alt="" loading="lazy">`;
+  if (item.icon.startsWith("emoji:")) return `<span class="emoji">${item.icon.slice(6)}</span>`;
+  return `<span class="emoji">📄</span>`;
+}
+
+// ── 초기화 ──
+(function init() {
+  const tagRow = document.getElementById("tags");
+  for (const [key, val] of Object.entries(CATS)) {
+    const cnt = key === "all" ? G.length : G.filter(r => r.cat === key).length;
+    const btn = document.createElement("button");
+    btn.className = "cbtn" + (key === "all" ? " on" : "");
+    btn.dataset.cat = key;
+    btn.textContent = `${val.icon} ${val.label} ${cnt}`;
+    btn.onclick = () => setCat(btn);
+    tagRow.appendChild(btn);
+  }
+  const statsBar = document.getElementById("statsBar");
+  const abbrCount = G.filter(r => r.abbr).length;
+  const iconCount = G.filter(r => r.icon).length;
+  statsBar.innerHTML = `
+    <span class="stat-chip">전체 <b>${G.length}</b>개</span>
+    <span class="stat-chip">아이콘 <b>${iconCount}</b>개</span>
+    <span class="stat-chip">약어 <b>${abbrCount}</b>개</span>
+  `;
+  render();
+})();
+
+function setCat(btn) {
+  document.querySelectorAll(".cbtn").forEach(b => b.classList.remove("on"));
+  btn.classList.add("on");
+  curCat = btn.dataset.cat;
+  render();
+}
+function setView(v, btn) {
+  curView = v;
+  document.querySelectorAll(".view-toggle button").forEach(b => b.classList.remove("on"));
+  btn.classList.add("on");
+  render();
+}
+function filter() {
+  const q = document.getElementById("q").value.trim().toLowerCase();
+  let f = G;
+  if (curCat !== "all") f = f.filter(r => r.cat === curCat);
+  if (q) f = f.filter(r =>
+    (r.en||"").toLowerCase().includes(q) || (r.ko||"").toLowerCase().includes(q) ||
+    (r.jp||"").toLowerCase().includes(q) || (r.abbr||"").toLowerCase().includes(q) ||
+    (r.desc||"").toLowerCase().includes(q)
+  );
+  return f;
+}
+
+function render() {
+  const filtered = filter();
+  document.getElementById("info").textContent = `${filtered.length} / ${G.length}개 표시`;
+  const noR = document.getElementById("noResult");
+  const cardV = document.getElementById("cardView");
+  const tblV = document.getElementById("tableView");
+
+  if (!filtered.length) {
+    cardV.style.display="none"; tblV.style.display="none"; noR.style.display="";
+    return;
+  }
+  noR.style.display = "none";
+
+  if (curView === "card") {
+    cardV.style.display = ""; tblV.style.display = "none";
+    cardV.innerHTML = filtered.map((r,i) => `
+      <div class="card" onclick="openModal(${G.indexOf(r)})">
+        <span class="cat-badge ${r.cat}">${CAT_LABELS[r.cat]}</span>
+        <div class="card-top">
+          <div class="card-icon">${renderIcon(r)}</div>
+          <div class="card-titles">
+            <div class="card-en">${r.en}${r.abbr?`<span class="card-abbr">${r.abbr}</span>`:""}</div>
+          </div>
+        </div>
+        <div class="card-langs">
+          <span class="card-lang"><span class="label">KO</span><span class="ko">${r.ko||"—"}</span></span>
+          <span class="card-lang"><span class="label">JP</span><span class="jp">${r.jp||"—"}</span></span>
+        </div>
+        ${r.desc?`<div class="card-desc">${r.desc}</div>`:""}
+      </div>`).join("");
+  } else {
+    cardV.style.display = "none"; tblV.style.display = "";
+    document.getElementById("tbody").innerHTML = filtered.map((r) => `
+      <tr onclick="openModal(${G.indexOf(r)})">
+        <td class="td-icon">${renderIcon(r, 24)}</td>
+        <td class="td-cat"><span class="cat-badge ${r.cat}">${CAT_LABELS[r.cat]}</span></td>
+        <td class="td-en"><span class="term-en">${r.en}</span>${r.abbr?`<span class="card-abbr">${r.abbr}</span>`:""}</td>
+        <td class="td-ko"><span class="term-ko">${r.ko||"—"}</span></td>
+        <td class="td-jp"><span class="term-jp">${r.jp||"—"}</span></td>
+        <td><span class="desc-text">${r.desc||""}</span></td>
+      </tr>`).join("");
+  }
+}
+
+// ── 모달 ──
+function openModal(idx) {
+  const r = G[idx];
+  const m = document.getElementById("modal");
+  let relHTML = "";
+  if (r.rel && r.rel.length) {
+    relHTML = `<div class="modal-related"><h4>관련 용어</h4><div class="related-tags">
+      ${r.rel.map(t => `<span class="related-tag" onclick="searchTerm('${t.replace(/'/g,"\\'")}')">${t}</span>`).join("")}
+    </div></div>`;
+  }
+  m.innerHTML = `
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-icon-row">
+      <div class="modal-icon">${renderIcon(r, 40)}</div>
+      <div class="modal-title">
+        <div class="modal-en">${r.en}${r.abbr?` <span class="card-abbr">${r.abbr}</span>`:""}</div>
+        <span class="modal-cat-badge cat-badge ${r.cat}">${CAT_LABELS[r.cat]}</span>
+      </div>
+    </div>
+    <div class="modal-langs">
+      <span class="flag">KO</span><span class="val-ko">${r.ko||"—"}</span>
+      <span class="flag">JP</span><span class="val-jp">${r.jp||"—"}</span>
+    </div>
+    <div class="modal-desc">${r.desc||""}</div>
+    ${relHTML}
+  `;
+  document.getElementById("modalOverlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeModal() {
+  document.getElementById("modalOverlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+function searchTerm(t) {
+  closeModal();
+  document.getElementById("q").value = t;
+  curCat = "all";
+  document.querySelectorAll(".cbtn").forEach(b => b.classList.toggle("on", b.dataset.cat === "all"));
+  render();
+  // 결과가 1개면 자동으로 모달 열기
+  const f = filter();
+  if (f.length === 1) { setTimeout(() => openModal(G.indexOf(f[0])), 150); }
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+</script>
+</body>
+</html>
