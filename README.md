@@ -47,8 +47,10 @@ glossary-guide/
 
 - 정본: `effects_src.json` — 이름 · 정의 · 근거 절만 사람이 고친다
 - 빌드: `PYTHONUTF8=1 py -3.14 _tools/glossary/build_effects.py` (워크스페이스 루트) → `index.html` 의 `<EFFECTS>` 구간
-  - 함수 꼴 = character-guide 의 파싱된 효과 단위에서 인자 칸을 모은 것 (`?` = 일부 스킬에만 붙는 인자)
-  - 쓰는 캐릭터 = 한(공지 스킬문) · 영(위키) · 일(game-info 스킬 효과 줄) 중 하나라도 이름이 나오는 캐릭터
+  - 한국어 이름 · 함수 꼴 정본 = 카페 딩님 스킬 DB(`_archive/ding-skill-searcher/`, 출처 표기 조건 — 화면에 표기)
+    DB_효과 한 줄(효과 동사 · 효과 상세 · 대상 · 확률 · 저항 무시 · 효과량 · 턴 · 횟수)을 모아 `상태 효과 부여(도발, 대상, 턴: 1~5·자연 해제, 저항 무시?)` 꼴로.
+    `?` = 일부 줄에만 있는 인자. 딩님 DB 에 없는 효과는 character-guide 의 파싱된 효과 단위로 대신
+  - 쓰는 캐릭터 = 딩님 DB · 한(공지 스킬문) · 영(위키) · 일(game-info 스킬 효과 줄) 중 하나라도 나오는 캐릭터
   - 이름 근거 0 인 언어는 `ko_note` 로 「미확인」 표시
 - 정의 근거: game-info 「状態効果まとめ」(`_archive/effect-glossary/`) · anothereden.wiki Status Effects
 
