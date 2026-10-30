@@ -41,6 +41,17 @@ glossary-guide/
 > **Git repo 미초기화 상태** -- GitHub Pages 배포 불가.
 > 배포하려면 `git init` + GitHub repo 생성 + Pages 설정 필요.
 
+## 「효과」 카테고리 (2026-10-30)
+
+스킬 효과 75개(고유 용어 59 · 능력치 16)를 영·일·한으로. 카드마다 정의 · 함수 꼴 · 쓰는 캐릭터 수.
+
+- 정본: `effects_src.json` — 이름 · 정의 · 근거 절만 사람이 고친다
+- 빌드: `PYTHONUTF8=1 py -3.14 _tools/glossary/build_effects.py` (워크스페이스 루트) → `index.html` 의 `<EFFECTS>` 구간
+  - 함수 꼴 = character-guide 의 파싱된 효과 단위에서 인자 칸을 모은 것 (`?` = 일부 스킬에만 붙는 인자)
+  - 쓰는 캐릭터 = 한(공지 스킬문) · 영(위키) · 일(game-info 스킬 효과 줄) 중 하나라도 이름이 나오는 캐릭터
+  - 이름 근거 0 인 언어는 `ko_note` 로 「미확인」 표시
+- 정의 근거: game-info 「状態効果まとめ」(`_archive/effect-glossary/`) · anothereden.wiki Status Effects
+
 ## 개발 노트
 
 - CSS/JS 모두 HTML 내 인라인 (단일 파일 배포 원칙)
