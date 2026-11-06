@@ -52,6 +52,8 @@ glossary-guide/
     `?` = 일부 줄에만 있는 인자. 딩님 DB 에 없는 효과는 character-guide 의 파싱된 효과 단위로 대신
   - 쓰는 캐릭터 = 딩님 DB · 한(공지 스킬문) · 영(위키) · 일(game-info 스킬 효과 줄) 중 하나라도 나오는 캐릭터
   - 이름 근거 0 인 언어는 `ko_note` 로 「미확인」 표시
+- 문장 조립 규칙(UP/증가 · 조사 · 공격문 · 조건절)은 용어집이 아니라 `docs/ae-translation-guide.md` — 여기는 고유 용어층만.
+  2026-11-06 공지 ko·ja·en 대조로 비열(ゲス) · 바꿔치기(あべこべ) · 결사 확정, JP 미확인 3개 채움
 - 정의 근거: game-info 「状態効果まとめ」(`_archive/effect-glossary/`) · anothereden.wiki Status Effects
 
 ## 개발 노트
