@@ -27,7 +27,7 @@
      "def": "행동을 고를 수 없고, 적·아군을 가리지 않고 아무 스킬이나 쓴다(아군에게는 단일 공격만).", "src": "gi 2-7 · wiki"},
     {"id": "stone", "kind": "proper", "sub": "ailment", "ko": "석화", "en": "Stone / Petrified", "wiki_icon": "Status_Stone.png", "en_alt": ["Petrification", "Petrify"], "jp": "石化", "en_re": "\\bStone\\b|Petrif",
      "def": "행동 불능 + 걸린 쪽의 버프·디버프·축적이 모두 풀리고 공격 대상에서 빠진다. 상태 이상 회복으로만 풀린다.", "src": "gi 2-8 · wiki"},
-    {"id": "darkness", "kind": "proper", "sub": "ailment", "ko": "실명", "en": "Darkness", "wiki_icon": "Status_Darkness.png", "jp": "暗闇", "ko_note": "효과 대조로 확정(2026-11-07) — 딩님 장비 「페인, 석화, 실명 저항+50%」 = 위키 같은 장비 「Pain/Stone/Darkness Resistance」 +50%, 이클립스 3종 3/3",
+    {"id": "darkness", "kind": "proper", "sub": "ailment", "ko": "실명", "en": "Darkness", "wiki_icon": "Status_Darkness.png", "jp": "暗闇", "ko_note": "효과 대조로 확정(2026-11-07) — 딩님 장비 「페인, 석화, 실명 저항+50%」 = 위키 같은 장비 「Pain/Stone/Darkness Resistance」 +50%, 이클립스 3종 3/3 · 원작 화면 확인(2026-11-07 알도 어빌리티 탭 「실명 저항+20%」 — 상태 이상 저항 11종 목록: 독·기절·수면·봉인·도발·석화·페인·혼란·실명·동결·비열)",
      "def": "물리 공격이 자주 빗나간다. 빗나간 공격은 AF 게이지를 채우지 못하고 함께 붙은 디버프·상태 이상도 걸리지 않는다.", "src": "gi 2-9 · wiki"},
     {"id": "frozen", "kind": "proper", "sub": "ailment", "ko": "동결", "en": "Frozen", "jp": "凍結", "en_re": "\\bFrozen\\b|\\bFreeze",
      "def": "행동 불능. 공격을 받아도 풀리지 않는다.", "src": "gi 2-10 · wiki"},
