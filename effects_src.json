@@ -172,5 +172,27 @@
     {"id": "bulls_eye", "kind": "proper", "sub": "equip", "ko": "겨누어 쏘기", "en": "Bull's Eye", "en_alt": ["Bulleye", "Bullseye"], "jp": "", "en_re": "[Bb]ull'?s ?[Ee]ye|Bulleye",
      "ko_note": "효과 대조로 확정(2026-11-07) — 딩님 장비 「겨누어 쏘기(어나더 포스 이외 시의 대미지+50%, 효과 중복 불가)」 = 위키 같은 장비 Bull's Eye +50%(장비 짝 · 수치 일치). 일본어명 근거 없음",
      "def": "어나더 포스가 아닐 때 대미지 +50%. 같은 효과는 겹치지 않는다(장비 전체에서 하나). 계산 키 aim.", "src": "wiki · 딩님 장비 목록"}
+  ],
+  "_vocab": "닫힌 어휘(속성 · 공격 종류 · 무기) — 빌더 · 문법표의 사본 대신 여기서 표를 만든다(_tools/translation/concepts.py). en_alt = 원문에 나오는 다른 꼴(위키 Ax · Lightning), jp = 일본어 공지 · 위키 한 글자 꼴. 용어집 화면(build_effects)은 읽지 않는다",
+  "vocab": [
+    {"id": "e_fire", "sub": "element", "ko": "불", "en": "Fire", "jp": "火"},
+    {"id": "e_water", "sub": "element", "ko": "물", "en": "Water", "jp": "水"},
+    {"id": "e_earth", "sub": "element", "ko": "땅", "en": "Earth", "jp": "地"},
+    {"id": "e_wind", "sub": "element", "ko": "바람", "en": "Wind", "jp": "風"},
+    {"id": "e_thunder", "sub": "element", "ko": "번개", "en": "Thunder", "en_alt": ["Lightning"], "jp": "雷"},
+    {"id": "e_shade", "sub": "element", "ko": "그림자", "en": "Shade", "jp": "陰"},
+    {"id": "e_crystal", "sub": "element", "ko": "결정", "en": "Crystal", "jp": "晶"},
+    {"id": "t_slash", "sub": "attack_type", "ko": "베기", "ko_alt": ["참격"], "en": "Slash", "jp": "斬", "note": "비긴즈 옛 표기 참격"},
+    {"id": "t_pierce", "sub": "attack_type", "ko": "찌르기", "ko_alt": ["자격"], "en": "Pierce", "en_alt": ["Piercing"], "jp": "突"},
+    {"id": "t_blunt", "sub": "attack_type", "ko": "타격", "en": "Blunt", "jp": "打"},
+    {"id": "t_magic", "sub": "attack_type", "ko": "마법", "en": "Magic", "jp": "魔法", "jp_alt": ["魔"]},
+    {"id": "w_sword", "sub": "weapon", "ko": "검", "en": "Sword", "jp": "剣"},
+    {"id": "w_katana", "sub": "weapon", "ko": "도", "en": "Katana", "jp": "刀"},
+    {"id": "w_axe", "sub": "weapon", "ko": "도끼", "en": "Ax", "en_alt": ["Axe"], "jp": "斧"},
+    {"id": "w_lance", "sub": "weapon", "ko": "창", "en": "Lance", "en_alt": ["Spear"], "jp": "槍"},
+    {"id": "w_bow", "sub": "weapon", "ko": "활", "en": "Bow", "jp": "弓"},
+    {"id": "w_fist", "sub": "weapon", "ko": "권갑", "en": "Fists", "en_alt": ["Fist"], "jp": "拳"},
+    {"id": "w_hammer", "sub": "weapon", "ko": "망치", "en": "Hammer", "jp": "槌"},
+    {"id": "w_staff", "sub": "weapon", "ko": "지팡이", "en": "Staff", "jp": "杖"}
   ]
 }
